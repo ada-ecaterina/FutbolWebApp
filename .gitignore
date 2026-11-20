@@ -1,0 +1,11 @@
+﻿Programs/*.exe
+Programs/*.dll
+*.tmp
+*.bak
+*.log
+IdeSrc/*.dsk
+Data/*.dat
+Data/*.hdr
+Data/*.k*
+Data/*.tag
+Data/*.vld
