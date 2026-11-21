@@ -9,8 +9,11 @@ Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 
 Use cligaDataDictionary.dd
+Use cequipoDataDictionary.dd
 
 Register_Object oSelectliga
+Register_Object oSelectequipo
+Register_Object oZoomequipo
 
 Object oZoomliga is a cWebView
     Set peViewType to vtZoom
@@ -21,6 +24,11 @@ Object oZoomliga is a cWebView
     Set psStateViewName to "Liga"
 
     Object ocligaDataDictionary is a cligaDataDictionary
+    End_Object
+
+    Object ocequipoDataDictionary is a cequipoDataDictionary
+        Set DDO_Server to ocligaDataDictionary
+        Set Constrain_file to liga.File_Number
     End_Object
 
     Set Main_DD to ocligaDataDictionary
@@ -76,6 +84,51 @@ Object oZoomliga is a cWebView
             Set piColumnIndex to 0
             Set psLabel to "Equipos Max"
             Set peLabelPosition to lpTop
+        End_Object
+
+        Object oVerEquiposBtn is a cWebButton
+            Set piColumnSpan to 4
+            Set piColumnIndex to 0
+            Set psCaption to "Ver equipos de esta liga"
+
+            WebRegisterPath ntNavigateForward oSelectequipo
+
+            Procedure OnClick
+                Send NavigatePath
+            End_Procedure
+        End_Object
+
+        Object oEquiposGroup is a cWebGroup
+            Set piColumnSpan to 12
+            Set piColumnIndex to 0
+            Set psCaption to "Equipos de esta liga"
+            Set piColumnCount to 12
+
+            Object oEquiposList is a cWebList
+                Set Server to ocequipoDataDictionary
+                Set piColumnSpan to 12
+                Set piHeight to 220
+                Set pbServerOnRowClick to True
+                Set peDbGridType to gtAllData
+
+                Object oEqID is a cWebColumn
+                    Entry_Item equipo.ID
+                    Set psCaption to "ID"
+                    Set piWidth to 60
+                End_Object
+
+                Object oEqNombre is a cWebColumn
+                    Entry_Item equipo.Nombre
+                    Set psCaption to "Equipo"
+                    Set piWidth to 260
+                End_Object
+
+                WebRegisterPath ntNavigateForward oZoomequipo
+
+                Procedure OnRowClick String sRowID
+                    Send NavigatePath
+                End_Procedure
+            End_Object
         End_Object
 
     End_Object
@@ -165,6 +218,7 @@ Object oZoomliga is a cWebView
         End
 
         Send SetActionButtons
+        Send GridRefresh of oEquiposList
     End_Procedure
 
 End_Object
