@@ -120,9 +120,11 @@ Object oZoomposicion is a cWebView
         If (NavigateData.eNavigateType= nfFromMain or NavigateData.eNavigateType=nfFromChild) Begin
             If (HasRecord(Server(Self))) Begin
                 Send SetBreadcrumbCaption (Trim(posicion.Nombre))
+                Send SetHeaderCaption (Trim(posicion.Nombre))
             End
             Else Begin
-                Send SetBreadcrumbCaption "Nuevo Posicion"
+                Send SetBreadcrumbCaption "Nueva Posicion"
+                Send SetHeaderCaption "Nueva Posicion"
             End
         End
 

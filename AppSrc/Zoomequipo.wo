@@ -70,6 +70,13 @@ Object oZoomequipo is a cWebView
             Set psLabel to "Liga"
             Set peLabelPosition to lpTop
             Set pbEnabled to False
+            Set pbPromptButton to True
+
+            WebRegisterPath ntNavigateForward oSelectliga
+
+            Procedure Prompt
+                Send NavigatePath
+            End_Procedure
         End_Object
 
     End_Object
@@ -152,9 +159,11 @@ Object oZoomequipo is a cWebView
         If (NavigateData.eNavigateType= nfFromMain or NavigateData.eNavigateType=nfFromChild) Begin
             If (HasRecord(Server(Self))) Begin
                 Send SetBreadcrumbCaption (Trim(equipo.Nombre))
+                Send SetHeaderCaption (Trim(equipo.Nombre))
             End
             Else Begin
                 Send SetBreadcrumbCaption "Nuevo Equipo"
+                Send SetHeaderCaption "Nuevo Equipo"
             End
         End
 

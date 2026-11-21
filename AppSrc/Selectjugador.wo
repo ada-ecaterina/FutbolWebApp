@@ -87,6 +87,10 @@ Object oSelectjugador is a cWebView
 
         WebRegisterPath ntNavigateForward oZoomjugador
 
+        Procedure OnGetNavigateForwardData tWebNavigateData ByRef NavigateData Handle hoToView
+            Move True to NavigateData.bReadOnly
+        End_Procedure
+
         Procedure OnRowClick String sRowID
             tWebNavigateData NavigateData
             Get GetNavigateData to NavigateData

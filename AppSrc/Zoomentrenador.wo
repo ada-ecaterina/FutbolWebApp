@@ -86,6 +86,13 @@ Object oZoomentrenador is a cWebView
             Set psLabel to "Equipo"
             Set peLabelPosition to lpTop
             Set pbEnabled to False
+            Set pbPromptButton to True
+
+            WebRegisterPath ntNavigateForward oSelectequipo
+
+            Procedure Prompt
+                Send NavigatePath
+            End_Procedure
         End_Object
 
     End_Object
@@ -168,9 +175,11 @@ Object oZoomentrenador is a cWebView
         If (NavigateData.eNavigateType= nfFromMain or NavigateData.eNavigateType=nfFromChild) Begin
             If (HasRecord(Server(Self))) Begin
                 Send SetBreadcrumbCaption (Trim(entrenador.Nombre))
+                Send SetHeaderCaption (Trim(entrenador.Nombre))
             End
             Else Begin
                 Send SetBreadcrumbCaption "Nuevo Entrenador"
+                Send SetHeaderCaption "Nuevo Entrenador"
             End
         End
 

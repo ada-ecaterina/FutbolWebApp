@@ -211,9 +211,11 @@ Object oZoomliga is a cWebView
         If (NavigateData.eNavigateType= nfFromMain or NavigateData.eNavigateType=nfFromChild) Begin
             If (HasRecord(Server(Self))) Begin
                 Send SetBreadcrumbCaption (Trim(liga.Nombre))
+                Send SetHeaderCaption (Trim(liga.Nombre))
             End
             Else Begin
-                Send SetBreadcrumbCaption "Nuevo Liga"
+                Send SetBreadcrumbCaption "Nueva Liga"
+                Send SetHeaderCaption "Nueva Liga"
             End
         End
 
