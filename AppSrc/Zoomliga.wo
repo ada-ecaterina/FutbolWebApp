@@ -1,10 +1,16 @@
 ﻿Use cWebView.pkg
 Use cWebPanel.pkg
 Use cWebForm.pkg
+Use cWebButton.pkg
+Use cWebGroup.pkg
+Use cWebList.pkg
+Use cWebColumn.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 
 Use cligaDataDictionary.dd
+
+Register_Object oSelectliga
 
 Object oZoomliga is a cWebView
     Set peViewType to vtZoom
@@ -26,12 +32,20 @@ Object oZoomliga is a cWebView
 
         Object oLigaID is a cWebForm
             Entry_Item liga.ID
-            Set piColumnSpan to 2
+            Set piColumnSpan to 3
             Set piColumnIndex to 0
             Set psLabel to "ID"
             Set peLabelPosition to lpTop
             Set psPlaceHolder to "Nuevo"
+            Set pbPromptButton to True
+
+            WebRegisterPath ntNavigateForward oSelectliga
+
+            Procedure Prompt
+                Send NavigatePath
+            End_Procedure
         End_Object
+
         Object oLigaNombre is a cWebForm
             Entry_Item liga.Nombre
             Set piColumnSpan to 6
@@ -39,6 +53,7 @@ Object oZoomliga is a cWebView
             Set psLabel to "Nombre"
             Set peLabelPosition to lpTop
         End_Object
+
         Object oLigaPais is a cWebForm
             Entry_Item liga.Pais
             Set piColumnSpan to 5
@@ -46,6 +61,7 @@ Object oZoomliga is a cWebView
             Set psLabel to "Pais"
             Set peLabelPosition to lpTop
         End_Object
+
         Object oLigaEquipos is a cWebForm
             Entry_Item liga.Equipos
             Set piColumnSpan to 3
@@ -53,6 +69,7 @@ Object oZoomliga is a cWebView
             Set psLabel to "Equipos"
             Set peLabelPosition to lpTop
         End_Object
+
         Object oLigaEquiposMax is a cWebForm
             Entry_Item liga.EquiposMax
             Set piColumnSpan to 3
