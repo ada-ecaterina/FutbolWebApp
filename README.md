@@ -1,18 +1,15 @@
-# FutbolWebApp — Sprint 1 (DF1 - Vistas)
+# FutbolWebApp
 
-Aplicación web móvil en **DataFlex 25.0** conectada a **MySQL 8.4** (`futbol`) siguiendo flujo **Gitflow**.
+Proyecto web móvil en DataFlex 25.0 conectado a MySQL 8.4 (base de datos `futbol`).
 
-## Estructura de ramas (Gitflow)
-- `main`: versión final entregable.
-- `develop`: rama de integración funcional.
-- `feature/vista-liga`: vistas Select y Zoom de `liga`.
-- `feature/vista-posicion`: vistas Select y Zoom de `posicion`.
-- `feature/vista-equipo`: vistas Select y Zoom de `equipo`.
-- `feature/vista-entrenador`: vistas Select y Zoom de `entrenador`.
-- `feature/vista-jugador`: vistas Select y Zoom de `jugador`.
-- `feature/dashboard-tiles`: tarjetas (*tiles*) de acceso en `Dashboard.wo`.
+## Qué incluye
+- **Vistas y Dashboard**: `Select` y `Zoom` para `liga`, `posicion`, `equipo`, `entrenador` y `jugador`, con acceso desde `Dashboard.wo`.
+- **Navegación**:
+  - Navegación desde padre hacia hijos (`Zoomliga` con listado de equipos de la liga).
+  - Navegación desde hijo hacia padre mediante prompt en `Zoomequipo`, `Zoomentrenador` y `Zoomjugador`.
+  - Navegación `Undefined` desde `Zoomjugador` hacia `Selectposicion` para gestionar `jugadorposicion`.
 
-## Puesta en marcha
-1. Importar el script de la base de datos `futbol` en MySQL 8.4.
-2. Configurar la conexión ODBC (`futbol`) en `Data/DFConnId.ini`.
-3. Abrir `FutbolWebApp.sws` en DataFlex 25.0 Studio, compilar y ejecutar (`F5`).
+## Cómo probarlo
+1. Importar la base de datos `futbol` en MySQL 8.4.
+2. Configurar el origen ODBC `futbol` en `Data/DFConnId.ini`.
+3. Abrir `FutbolWebApp.sws` en DataFlex 25.0, compilar y ejecutar.
