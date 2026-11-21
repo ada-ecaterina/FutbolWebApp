@@ -51,6 +51,46 @@ Object oWebApp is a cWebApp
 
                 Object oViewMenu is a cWebMenuItem
                     Set psCaption to C_$View
+
+                    Object oSelectLiga_itm is a cWebMenuItem
+                        Set psCaption to "Ligas"
+                        WebRegisterPath ntNavigateBegin oSelectliga
+                        Procedure OnClick
+                            Send NavigatePath
+                        End_Procedure
+                    End_Object
+
+                    Object oSelectEquipo_itm is a cWebMenuItem
+                        Set psCaption to "Equipos"
+                        WebRegisterPath ntNavigateBegin oSelectequipo
+                        Procedure OnClick
+                            Send NavigatePath
+                        End_Procedure
+                    End_Object
+
+                    Object oSelectEntrenador_itm is a cWebMenuItem
+                        Set psCaption to "Entrenadores"
+                        WebRegisterPath ntNavigateBegin oSelectentrenador
+                        Procedure OnClick
+                            Send NavigatePath
+                        End_Procedure
+                    End_Object
+
+                    Object oSelectJugador_itm is a cWebMenuItem
+                        Set psCaption to "Jugadores"
+                        WebRegisterPath ntNavigateBegin oSelectjugador
+                        Procedure OnClick
+                            Send NavigatePath
+                        End_Procedure
+                    End_Object
+
+                    Object oSelectPosicion_itm is a cWebMenuItem
+                        Set psCaption to "Posiciones"
+                        WebRegisterPath ntNavigateBegin oSelectposicion
+                        Procedure OnClick
+                            Send NavigatePath
+                        End_Procedure
+                    End_Object
                 End_Object
 
                 Object oSignOut_itm is a cWebMenuItem
