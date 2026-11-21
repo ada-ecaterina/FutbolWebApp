@@ -9,3 +9,9 @@ Data/*.hdr
 Data/*.k*
 Data/*.tag
 Data/*.vld
+AppSrc/*.exe.manifest
+AppSrc/*.dep
+AppSrc/*.prn
+Data/*.cch
+IdeSrc/
+Programs/

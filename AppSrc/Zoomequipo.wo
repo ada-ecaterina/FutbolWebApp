@@ -1,0 +1,173 @@
+﻿Use cWebView.pkg
+Use cWebPanel.pkg
+Use cWebForm.pkg
+Use cWebMenuGroup.pkg
+Use cWebMenuItem.pkg
+
+Use cligaDataDictionary.dd
+Use cequipoDataDictionary.dd
+
+Register_Object oSelectliga
+
+Object oZoomequipo is a cWebView
+    Set peViewType to vtZoom
+    Set psCaption to "Equipo"
+    Set pbShowCaption to False
+    Set piMaxWidth to 1024
+    Set Verify_Save_msg to 0
+    Set psStateViewName to "Equipo"
+
+    Object ocligaDataDictionary is a cligaDataDictionary
+    End_Object
+
+    Object ocequipoDataDictionary is a cequipoDataDictionary
+        Set DDO_Server to ocligaDataDictionary
+    End_Object
+
+    Set Main_DD to ocequipoDataDictionary
+    Set Server  to ocequipoDataDictionary
+
+    Object oWebMainPanel is a cWebPanel
+        Set piColumnCount to 12
+        WebSetResponsive piColumnCount rmMobile to 6
+
+        Object oEquipoID is a cWebForm
+            Entry_Item equipo.ID
+            Set piColumnSpan to 2
+            Set piColumnIndex to 0
+            Set psLabel to "ID"
+            Set peLabelPosition to lpTop
+            Set psPlaceHolder to "Nuevo"
+        End_Object
+
+        Object oEquipoNombre is a cWebForm
+            Entry_Item equipo.Nombre
+            Set piColumnSpan to 6
+            Set piColumnIndex to 0
+            Set psLabel to "Nombre"
+            Set peLabelPosition to lpTop
+        End_Object
+
+        Object oEquipoLigaID is a cWebForm
+            Entry_Item liga.ID
+            Set piColumnSpan to 3
+            Set piColumnIndex to 0
+            Set psLabel to "Liga ID"
+            Set peLabelPosition to lpTop
+            Set pbPromptButton to True
+
+            WebRegisterPath ntNavigateForward oSelectliga
+
+            Procedure Prompt
+                Send NavigatePath
+            End_Procedure
+        End_Object
+
+        Object oLigaNombre is a cWebForm
+            Entry_Item liga.Nombre
+            Set piColumnSpan to 5
+            Set piColumnIndex to 3
+            Set psLabel to "Liga"
+            Set peLabelPosition to lpTop
+            Set pbEnabled to False
+            Set pbPromptButton to True
+
+            WebRegisterPath ntNavigateForward oSelectliga
+
+            Procedure Prompt
+                Send NavigatePath
+            End_Procedure
+        End_Object
+
+    End_Object
+
+    Object oActionGroup is a cWebMenuGroup
+
+        Object oSaveBtn is a cWebMenuItem
+            Set psCaption to "Guardar"
+            Set psCSSClass to "WebSaveMenuItem"
+
+            Procedure OnClick
+                Send Request_Save
+            End_Procedure
+        End_Object
+
+        Object oEditBtn is a cWebMenuItem
+            Set psCaption to "Editar"
+            Set psCSSClass to "WebEditMenuItem"
+
+            Procedure OnClick
+                Send ChangeEditMode True
+                Send SetActionButtons
+            End_Procedure
+        End_Object
+
+        Object oDeleteBtn is a cWebMenuItem
+            Set psCaption to "Eliminar"
+            Set psCSSClass to "WebDeleteMenuItem"
+            Set peActionDisplay to adMenu
+
+            Procedure OnClick
+                Send Request_Delete
+            End_Procedure
+        End_Object
+
+        Object oCancelChangesBtn is a cWebMenuItem
+            Set psCaption to "Deshacer cambios"
+            Set peActionDisplay to adMenu
+
+            Procedure OnClick
+                Send RefreshRecord
+            End_Procedure
+        End_Object
+
+    End_Object
+
+    Procedure SetActionButtons
+        tWebNavigateData NavigateData
+        Boolean bHasRecord
+        Handle hoDD
+
+        Get Server to hoDD
+        Get GetNavigateData to NavigateData
+        Get HasRecord of hoDD to bHasRecord
+
+        WebSet pbRender of oEditBtn to False
+        WebSet pbRender of oSaveBtn to False
+        WebSet pbRender of oCancelChangesBtn to False
+        WebSet pbRender of oDeleteBtn to False
+
+        If (NavigateData.bReadOnly) Begin
+            WebSet pbRender of oEditBtn to True
+        End
+        Else Begin
+            WebSet pbRender of oSaveBtn to True
+            WebSet pbRender of oCancelChangesBtn to True
+            WebSet pbRender of oDeleteBtn to bHasRecord
+        End
+    End_Procedure
+
+    Procedure OnViewSaved Handle hoServer Boolean bChanged
+        Send NavigateClose Self
+    End_Procedure
+
+    Procedure OnViewDeleted Handle hoDDO
+        Send NavigateClose Self
+    End_Procedure
+
+    Procedure OnNavigateForward tWebNavigateData NavigateData Handle hoInvokingView Handle hoInvokingObject
+        If (NavigateData.eNavigateType= nfFromMain or NavigateData.eNavigateType=nfFromChild) Begin
+            If (HasRecord(Server(Self))) Begin
+                Send SetBreadcrumbCaption (Trim(equipo.Nombre))
+                Send SetHeaderCaption (Trim(equipo.Nombre))
+            End
+            Else Begin
+                Send SetBreadcrumbCaption "Nuevo Equipo"
+                Send SetHeaderCaption "Nuevo Equipo"
+            End
+        End
+
+        Send SetActionButtons
+    End_Procedure
+
+End_Object
